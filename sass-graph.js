@@ -65,11 +65,7 @@ Graph.prototype.addFile = function(filepath, parent) {
 
   var i, length = imports.length;
   for (i = 0; i < length; i++) {
-    [this.dir, cwd].forEach(function (path) {
-      if (path && this.loadPaths.indexOf(path) === -1) {
-        this.loadPaths.push(path);
-      }
-    }.bind(this));
+    this.loadPaths = _([cwd, this.dir]).concat(this.loadPaths).filter().uniq().value();
     var resolved = resolveSassPath(imports[i], _.uniq(this.loadPaths));
     if (!resolved) continue;
 
